@@ -6,7 +6,7 @@ import (
 
 	"github.com/emicklei/go-restful/v3"
 
-	"boost/restful/errors"
+	"github.com/poleljy/go-boost/restful/errors"
 )
 
 func ParseRequestBody(req *restful.Request, res *restful.Response, entityPointer interface{}) error {

@@ -16,7 +16,7 @@ import (
 	restful "github.com/emicklei/go-restful/v3"
 	"github.com/go-openapi/spec"
 
-	"boost/restful/util"
+	"github.com/poleljy/go-boost/restful/util"
 )
 
 var (
