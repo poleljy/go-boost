@@ -5,7 +5,7 @@ import (
 
 	"github.com/mitchellh/cli"
 
-	"boost/restful/service"
+	"github.com/poleljy/go-boost/restful/service"
 )
 
 var (
