@@ -108,7 +108,7 @@ func (s *service) Handle(pattern string, handler http.Handler) {
 	wc, ok := handler.(*restful.Container)
 	if ok && wc != nil {
 		config := restfulspec.Config{
-			WebServices:                   restful.RegisteredWebServices(),
+			WebServices:                   wc.RegisteredWebServices(),
 			APIPath:                       "/apidocs.json",
 			PostBuildSwaggerObjectHandler: enrichSwaggerObject,
 		}
