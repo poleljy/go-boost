@@ -1,4 +1,4 @@
-module boost
+module github.com/poleljy/go-boost
 
 go 1.16
 
