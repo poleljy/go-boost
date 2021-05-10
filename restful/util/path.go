@@ -2,6 +2,9 @@ package util
 
 import (
 	"os"
+	"os/exec"
+	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -30,4 +33,20 @@ func Exists(path string) bool {
 		}
 	}
 	return true
+}
+
+func GetCurrentPath() (string, error) {
+	file, err := exec.LookPath(os.Args[0])
+	if err != nil {
+		return "", err
+	}
+	path, err := filepath.Abs(file)
+	if err != nil {
+		return "", err
+	}
+	if runtime.GOOS == "windows" {
+		path = strings.Replace(path, "\\", "/", -1)
+	}
+
+	return filepath.Dir(path), nil
 }

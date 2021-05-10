@@ -5,7 +5,7 @@ import (
 
 	"github.com/mitchellh/cli"
 
-	"deploy/restful/service"
+	"boost/restful/service"
 )
 
 var (

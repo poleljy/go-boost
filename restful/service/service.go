@@ -12,15 +12,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/emicklei/go-restful"
-	"github.com/emicklei/go-restful-openapi"
+	restfulspec "github.com/emicklei/go-restful-openapi/v2"
+	restful "github.com/emicklei/go-restful/v3"
 	"github.com/go-openapi/spec"
-	uuid "github.com/satori/go.uuid"
+
+	"boost/restful/util"
 )
 
 var (
 	// For serving
-	DefaultId      = uuid.NewV4().String()
+	DefaultId      = util.UUID()
 	DefaultName    = "daemon"
 	DefaultVersion = "latest"
 	DefaultAddress = ":8080"
@@ -67,9 +68,6 @@ func (s *service) Init(c *Meta) error {
 	if len(c.ServiceAddress) > 0 {
 		s.opts.Address = c.ServiceAddress
 	}
-	if len(c.ServiceNamespace) > 0 {
-		s.opts.Namespace = c.ServiceNamespace
-	}
 	return nil
 }
 
@@ -110,7 +108,7 @@ func (s *service) Handle(pattern string, handler http.Handler) {
 	wc, ok := handler.(*restful.Container)
 	if ok && wc != nil {
 		config := restfulspec.Config{
-			WebServices:                   wc.RegisteredWebServices(),
+			WebServices:                   restful.RegisteredWebServices(),
 			APIPath:                       "/apidocs.json",
 			PostBuildSwaggerObjectHandler: enrichSwaggerObject,
 		}

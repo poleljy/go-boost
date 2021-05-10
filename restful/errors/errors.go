@@ -13,9 +13,9 @@ var (
 
 // Error implements the error interface.
 type Error struct {
-	Code   int32  `json:"code"`
-	Detail string `json:"error"`
-	Status string `json:"status"`
+	Code    int32  `json:"code"`
+	Detail  string `json:"error"`
+	Message string `json:"message"`
 }
 
 func (e *Error) Error() string {
@@ -26,9 +26,9 @@ func (e *Error) Error() string {
 // New generates a custom error.
 func New(detail string, code int32) error {
 	return &Error{
-		Code:   code,
-		Detail: detail,
-		Status: http.StatusText(int(code)),
+		Code:    code,
+		Detail:  detail,
+		Message: http.StatusText(int(code)),
 	}
 }
 
@@ -43,56 +43,62 @@ func Parse(err string) *Error {
 	return e
 }
 
-// BadRequest generates a 400 error.
+// BadRequest/InvalidRequest generates a 400 error.
 func BadRequest(format string, a ...interface{}) error {
 	return &Error{
-		Code:   400,
-		Detail: fmt.Sprintf(format, a...),
-		Status: http.StatusText(400),
+		Code:    400,
+		Detail:  fmt.Sprintf(format, a...),
+		Message: http.StatusText(400),
 	}
 }
 
 // Unauthorized generates a 401 error.
-func Unauthorized(id, format string, a ...interface{}) error {
+func Unauthorized(format string, a ...interface{}) error {
 	return &Error{
-		Code:   401,
-		Detail: fmt.Sprintf(format, a...),
-		Status: http.StatusText(401),
+		Code:    401,
+		Detail:  fmt.Sprintf(format, a...),
+		Message: http.StatusText(401),
 	}
 }
 
 // Forbidden generates a 403 error.
-func Forbidden(id, format string, a ...interface{}) error {
+func Forbidden(format string, a ...interface{}) error {
 	return &Error{
-		Code:   403,
-		Detail: fmt.Sprintf(format, a...),
-		Status: http.StatusText(403),
+		Code:    403,
+		Detail:  fmt.Sprintf(format, a...),
+		Message: http.StatusText(403),
 	}
 }
 
 // NotFound generates a 404 error.
-func NotFound(id, format string, a ...interface{}) error {
+func NotFound(format string, a ...interface{}) error {
 	return &Error{
-		Code:   404,
-		Detail: fmt.Sprintf(format, a...),
-		Status: http.StatusText(404),
+		Code:    404,
+		Detail:  fmt.Sprintf(format, a...),
+		Message: http.StatusText(404),
 	}
 }
 
-// InternalServerError generates a 500 error.
-func InternalServerError(id, format string, a ...interface{}) error {
-	return &Error{
-		Code:   500,
-		Detail: fmt.Sprintf(format, a...),
-		Status: http.StatusText(500),
-	}
-}
+// 406
 
 // Conflict generates a 409 error.
-func Conflict(id, format string, a ...interface{}) error {
+func Conflict(format string, a ...interface{}) error {
 	return &Error{
-		Code:   409,
-		Detail: fmt.Sprintf(format, a...),
-		Status: http.StatusText(409),
+		Code:    409,
+		Detail:  fmt.Sprintf(format, a...),
+		Message: http.StatusText(409),
+	}
+}
+
+// 410
+
+// 422
+
+// InternalServerError generates a 500 error.
+func InternalServerError(format string, a ...interface{}) error {
+	return &Error{
+		Code:    500,
+		Detail:  fmt.Sprintf(format, a...),
+		Message: http.StatusText(500),
 	}
 }
